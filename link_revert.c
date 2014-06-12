@@ -26,7 +26,15 @@ void reverse(node_t *& head){
 
 
 node_t * reverse_recursive(node_t * node, node_t * & head){
-
+    if(NULL == node || NULL == node->next){
+        head = node;
+        return node;
+    } else {
+        node_t * next_tail = reverse_recursive(node->next, head);
+        next_tail->next = node;
+        node->next = NULL;
+        return node;
+    }
 }
 
 int main(){
@@ -35,7 +43,7 @@ int main(){
     node_t c = {&b, 3};
 
     node_t * head = &c;
-    reverse(head);
+    reverse_recursive(head, head);
     while(head){
         printf("%d,", head->data);
         head = head->next;
