@@ -30,9 +30,31 @@ void quick_sort(T* a, int low, int high){
     }
     a[i] = cmp_data;
     quick_sort(a, low, i);
-    quick_sort(a, i + 1, high);
+    quick_sort(a, i+1, high);
 }
 
+template <class T>
+void quick_sort_random_pivot(T *a, int low, int high){
+    if(low >= high)
+        return ;
+
+    int i = low, j = high;
+    int p = low + (rand() % (high - low));
+    int cmp_data = a[p];
+    while(i < j){
+        while(i < j && a[j] > cmp_data)
+            j--;
+        
+        while(i < j && a[i] <= cmp_data)
+            i++;
+
+        if(i < j)
+            swap(&a[i], &a[j]);
+        i++, j--;
+    }
+    quick_sort_random_pivot(a, low, i-1);
+    quick_sort_random_pivot(a, i, high);
+}
 
 int main(){
     int a[] = {1, 7, 4, 3, 5, 8, 9, 12, 2, 15};
